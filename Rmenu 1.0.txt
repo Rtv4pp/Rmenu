@@ -202,12 +202,14 @@ local function updateScrollWithVehicles()
         totalHeight = totalHeight + 40
 
         button.MouseButton1Click:Connect(function()
+            -- Fill the TextBox with the selected vehicle ID
             textBox.Text = tostring(vehicle.id)
         end)
     end
 
     scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
 end
+
 
 CarMode.MouseButton1Click:Connect(function()
     updateScrollWithVehicles()
