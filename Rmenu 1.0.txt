@@ -1,87 +1,197 @@
-local function enableDragging(frame)
-    local dragging
-    local dragInput
-    local dragStart
-    local startPos
+local mainFrame = Instance.new("ScreenGui")
+mainFrame.Name = "GiftSenderUI"
+mainFrame.Parent = game.Players.LocalPlayer.PlayerGui
 
-    local function update(input)
-        local delta = input.Position - dragStart
-        frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-    end
+local background = Instance.new("Frame")
+background.Name = "background"
+background.Visible = true
+background.Position = UDim2.new(0,432,0,159)
+background.Size = UDim2.new(0,368,0,487)
 
-    frame.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            dragging = true
-            dragStart = input.Position
-            startPos = frame.Position
+background.BorderColor3 = Color3.new(0,0,0)
+background.Style = Enum.FrameStyle.Custom
+background.BorderSizePixel = 0
+background.BackgroundColor3 = Color3.new(0.1725490242242813,0.1725490242242813,0.1725490242242813)
+background.Parent = mainFrame
 
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
-        end
-    end)
+-- Adicionando funcionalidade de arrastar e soltar
+local dragging
+local dragStart
+local startPos
 
-    frame.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-            dragInput = input
-        end
-    end)
+background.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = true
+		dragStart = input.Position
+		startPos = background.Position
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
 
-    game:GetService("UserInputService").InputChanged:Connect(function(input)
-        if input == dragInput and dragging then
-            update(input)
-        end
-    end)
-end
+background.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement and dragging then
+		local delta = input.Position - dragStart
+		background.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+end)
 
--- Criação da UI
-local player = game.Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
+background.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = false
+	end
+end)			
 
-local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "VehicleSpawnerUI"
-screenGui.Parent = playerGui
 
-local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 250, 0, 450)
-frame.Position = UDim2.new(0.5, -125, 0.5, -225)
-frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)  -- Cinza escuro
-frame.BorderSizePixel = 0
-frame.Active = true
-frame.Parent = screenGui
+local background = Instance.new("Frame")
+background.Name = "background"
+background.Visible = true
+background.Position = UDim2.new(0.3497975766658783,0,0.19602978229522705,0)
+background.Size = UDim2.new(0,368,0,487)
 
--- Ativa a funcionalidade de arrastar a janela
-enableDragging(frame)
+background.BorderColor3 = Color3.new(0,0,0)
+background.Style = Enum.FrameStyle.Custom
+background.BorderSizePixel = 0
+background.BackgroundColor3 = Color3.new(0.1725490242242813,0.1725490242242813,0.1725490242242813)
+background.Parent = game.StarterGui.UI
+			
+local Title = Instance.new("TextLabel")
+Title.Name = "Title"
+Title.Visible = true
+Title.Position = UDim2.new(0,0,0,0)
+Title.Size = UDim2.new(0,368,0,49)
 
-local titleText = Instance.new("TextLabel")
-titleText.Size = UDim2.new(1, 0, 0, 40)
-titleText.Position = UDim2.new(0, 0, 0, 0)
-titleText.BackgroundTransparency = 1
-titleText.Text = "RMENU 1.0"
-titleText.Font = Enum.Font.SourceSansBold
-titleText.TextColor3 = Color3.new(1, 1, 1)
-titleText.TextScaled = true
-titleText.Parent = frame
+Title.Font = Enum.Font.SourceSansBold
+Title.TextSize = 52
+Title.TextColor3 = Color3.new(1,1,1)
+Title.BorderColor3 = Color3.new(0,0,0)
+Title.Text = "Rmenu 1.0"
+Title.BorderSizePixel = 0
+Title.BackgroundColor3 = Color3.new(1,0.3176470696926117,0.003921568859368563)
+Title.Parent = background
+			
+local Scroll = Instance.new("ScrollingFrame")
+Scroll.Name = "Scroll"
+Scroll.Visible = true
+Scroll.Position = UDim2.new(0.029818695038557053,0,0.20328542590141296,0)
+Scroll.Size = UDim2.new(0,145,0,376)
 
-local scrollingFrame = Instance.new("ScrollingFrame")
-scrollingFrame.Size = UDim2.new(1, 0, 0.7, -50)
-scrollingFrame.Position = UDim2.new(0, 0, 0.15, 0)
-scrollingFrame.BackgroundTransparency = 1
-scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 500) -- Tamanho inicial do conteúdo
-scrollingFrame.ScrollBarThickness = 8
-scrollingFrame.Parent = frame
+Scroll.BorderColor3 = Color3.new(0,0,0)
+Scroll.ClipsDescendants = true
+Scroll.BorderSizePixel = 0
+Scroll.BackgroundColor3 = Color3.new(0.27843138575553894,0.27843138575553894,0.27843138575553894)
+Scroll.Parent = background
+			
+local SpawnButton = Instance.new("TextButton")
+SpawnButton.Name = "SpawnButton"
+SpawnButton.Visible = true
+SpawnButton.Position = UDim2.new(0.4825206995010376,0,0.5133470296859741,0)
+SpawnButton.Size = UDim2.new(0,170,0,45)
 
-local closeButton = Instance.new("TextButton")
-closeButton.Size = UDim2.new(0, 230, 0, 40)
-closeButton.Position = UDim2.new(0.4, -90, 1, 0)
-closeButton.Text = "Close"
-closeButton.Font = Enum.Font.SourceSansBold
-closeButton.TextColor3 = Color3.new(1, 1, 1)
-closeButton.BackgroundColor3 = Color3.new(0, 0, 0)
-closeButton.BorderSizePixel = 0
-closeButton.AutoButtonColor = false
-closeButton.Parent = frame
+SpawnButton.Font = Enum.Font.SourceSansBold
+SpawnButton.TextSize = 40
+SpawnButton.TextColor3 = Color3.new(1,1,1)
+SpawnButton.BorderColor3 = Color3.new(0,0,0)
+SpawnButton.Text = "Spawn"
+SpawnButton.BorderSizePixel = 0
+SpawnButton.BackgroundColor3 = Color3.new(1,0.3333333432674408,0)
+SpawnButton.Parent = background
+			
+local TexBox = Instance.new("TextBox")
+TexBox.Name = "TexBox"
+TexBox.Visible = true
+TexBox.Position = UDim2.new(0.4825206995010376,0,0.3860369622707367,0)
+TexBox.Size = UDim2.new(0,170,0,49)
 
-scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
+TexBox.Font = Enum.Font.SourceSansItalic
+TexBox.TextSize = 14
+TexBox.TextColor3 = Color3.new(1,1,1)
+TexBox.BorderColor3 = Color3.new(0,0,0)
+TexBox.Text = "Digite o ID ou selecione na lista."
+TexBox.BorderSizePixel = 0
+TexBox.BackgroundColor3 = Color3.new(1,0.3333333432674408,0)
+TexBox.Parent = background
+			
+local ButtonExit = Instance.new("TextButton")
+ButtonExit.Name = "ButtonExit"
+ButtonExit.Visible = true
+ButtonExit.Position = UDim2.new(1.0138356685638428,0,0,0)
+ButtonExit.Size = UDim2.new(0,42,0,43)
+
+ButtonExit.TextSize = 46
+ButtonExit.TextWrapped = true
+ButtonExit.Font = Enum.Font.SourceSansBold
+ButtonExit.TextColor3 = Color3.new(1,1,1)
+ButtonExit.BorderColor3 = Color3.new(0,0,0)
+ButtonExit.Text = "X"
+ButtonExit.BorderSizePixel = 0
+ButtonExit.BackgroundColor3 = Color3.new(1,0.3333333432674408,0)
+ButtonExit.Parent = background
+			
+local HouseMode = Instance.new("TextButton")
+HouseMode.Name = "HouseMode"
+HouseMode.Visible = true
+HouseMode.Position = UDim2.new(0.029818695038557053,0,0.12114989757537842,0)
+HouseMode.Size = UDim2.new(0,65,0,25)
+
+HouseMode.Font = Enum.Font.SourceSansBold
+HouseMode.TextSize = 14
+HouseMode.TextColor3 = Color3.new(1,1,1)
+HouseMode.BorderColor3 = Color3.new(0,0,0)
+HouseMode.Text = "HouseMode"
+HouseMode.BorderSizePixel = 0
+HouseMode.BackgroundColor3 = Color3.new(1,0.3333333432674408,0)
+HouseMode.Parent = background
+			
+local CarMode = Instance.new("TextButton")
+CarMode.Name = "CarMode"
+CarMode.Visible = true
+CarMode.Position = UDim2.new(0.24668192863464355,0,0.12114989757537842,0)
+CarMode.Size = UDim2.new(0,65,0,25)
+
+CarMode.Font = Enum.Font.SourceSansBold
+CarMode.TextSize = 14
+CarMode.TextColor3 = Color3.new(1,1,1)
+CarMode.BorderColor3 = Color3.new(0,0,0)
+CarMode.Text = "CarMode"
+CarMode.BorderSizePixel = 0
+CarMode.BackgroundColor3 = Color3.new(1,0.3333333432674408,0)
+CarMode.Parent = background
+			
+local Creditos = Instance.new("TextLabel")
+Creditos.Name = "Creditos"
+Creditos.Visible = true
+Creditos.Position = UDim2.new(0.4445696473121643,0,0.9383983612060547,0)
+Creditos.Size = UDim2.new(0,200,0,19)
+
+Creditos.Font = Enum.Font.SourceSansBold
+Creditos.TextSize = 14
+Creditos.TextColor3 = Color3.new(1,1,1)
+Creditos.BorderColor3 = Color3.new(0,0,0)
+Creditos.Text = "By: Rai"
+Creditos.BorderSizePixel = 0
+Creditos.BackgroundColor3 = Color3.new(0.1725490242242813,0.1725490242242813,0.1725490242242813)
+Creditos.Parent = background
+			
+local TexBoxPlot = Instance.new("TextBox")
+TexBoxPlot.Name = "TexBoxPlot"
+TexBoxPlot.Visible = true
+TexBoxPlot.Position = UDim2.new(0.4825206995010376,0,0.26283368468284607,0)
+TexBoxPlot.Size = UDim2.new(0,170,0,49)
+
+TexBoxPlot.Font = Enum.Font.SourceSansItalic
+TexBoxPlot.TextSize = 14
+TexBoxPlot.TextColor3 = Color3.new(1,1,1)
+TexBoxPlot.BorderColor3 = Color3.new(0,0,0)
+TexBoxPlot.Text = "Digite o Plot da casa"
+TexBoxPlot.BorderSizePixel = 0
+TexBoxPlot.BackgroundColor3 = Color3.new(1,0.3333333432674408,0)
+TexBoxPlot.Parent = background
+
+-- Função para fechar o menu
+ButtonExit.MouseButton1Click:Connect(function()
+	mainFrame:Destroy()
+end)
