@@ -203,7 +203,7 @@ local function updateScrollWithVehicles()
 
         button.MouseButton1Click:Connect(function()
             -- Fill the TextBox with the selected vehicle ID
-            textBox.Text = tostring(vehicle.id)
+            TexBox.Text = tostring(vehicle.id)
         end)
     end
 
