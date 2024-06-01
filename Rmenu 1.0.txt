@@ -1,78 +1,35 @@
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
 local mainFrame = Instance.new("ScreenGui")
 mainFrame.Name = "GiftSenderUI"
-mainFrame.Parent = game.Players.LocalPlayer.PlayerGui
+mainFrame.Parent = playerGui
 
 local background = Instance.new("Frame")
 background.Name = "background"
 background.Visible = true
-background.Position = UDim2.new(0,432,0,159)
-background.Size = UDim2.new(0,368,0,487)
-
-background.BorderColor3 = Color3.new(0,0,0)
+background.Position = UDim2.new(0.3497975766658783, 0, 0.19602978229522705, 0)
+background.Size = UDim2.new(0, 368, 0, 487)
+background.BorderColor3 = Color3.new(0, 0, 0)
 background.Style = Enum.FrameStyle.Custom
 background.BorderSizePixel = 0
-background.BackgroundColor3 = Color3.new(0.1725490242242813,0.1725490242242813,0.1725490242242813)
+background.BackgroundColor3 = Color3.new(0.1725490242242813, 0.1725490242242813, 0.1725490242242813)
 background.Parent = mainFrame
 
--- Adicionando funcionalidade de arrastar e soltar
-local dragging
-local dragStart
-local startPos
-
-background.InputBegan:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 then
-		dragging = true
-		dragStart = input.Position
-		startPos = background.Position
-		input.Changed:Connect(function()
-			if input.UserInputState == Enum.UserInputState.End then
-				dragging = false
-			end
-		end)
-	end
-end)
-
-background.InputChanged:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseMovement and dragging then
-		local delta = input.Position - dragStart
-		background.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-	end
-end)
-
-background.InputEnded:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 then
-		dragging = false
-	end
-end)			
-
-
-local background = Instance.new("Frame")
-background.Name = "background"
-background.Visible = true
-background.Position = UDim2.new(0.3497975766658783,0,0.19602978229522705,0)
-background.Size = UDim2.new(0,368,0,487)
-
-background.BorderColor3 = Color3.new(0,0,0)
-background.Style = Enum.FrameStyle.Custom
-background.BorderSizePixel = 0
-background.BackgroundColor3 = Color3.new(0.1725490242242813,0.1725490242242813,0.1725490242242813)
-background.Parent = game.StarterGui.UI
-			
 local Title = Instance.new("TextLabel")
 Title.Name = "Title"
 Title.Visible = true
-Title.Position = UDim2.new(0,0,0,0)
-Title.Size = UDim2.new(0,368,0,49)
-
+Title.Position = UDim2.new(0, 0, 0, 0)
+Title.Size = UDim2.new(0, 368, 0, 49)
 Title.Font = Enum.Font.SourceSansBold
 Title.TextSize = 52
-Title.TextColor3 = Color3.new(1,1,1)
-Title.BorderColor3 = Color3.new(0,0,0)
+Title.TextColor3 = Color3.new(1, 1, 1)
+Title.BorderColor3 = Color3.new(0, 0, 0)
 Title.Text = "Rmenu 1.0"
 Title.BorderSizePixel = 0
-Title.BackgroundColor3 = Color3.new(1,0.3176470696926117,0.003921568859368563)
+Title.BackgroundColor3 = Color3.new(1, 0.3176470696926117, 0.003921568859368563)
 Title.Parent = background
-			
+
 local Scroll = Instance.new("ScrollingFrame")
 Scroll.Name = "Scroll"
 Scroll.Visible = true
@@ -191,7 +148,62 @@ TexBoxPlot.BorderSizePixel = 0
 TexBoxPlot.BackgroundColor3 = Color3.new(1,0.3333333432674408,0)
 TexBoxPlot.Parent = background
 
--- Função para fechar o menu
-ButtonExit.MouseButton1Click:Connect(function()
-	mainFrame:Destroy()
+
+-- Define a function to close the menu
+local function closeMenu()
+    mainFrame:Destroy()
+end
+
+-- Button to close the menu
+local ButtonExit = Instance.new("TextButton")
+ButtonExit.Name = "ButtonExit"
+ButtonExit.Visible = true
+ButtonExit.Position = UDim2.new(1, -42, 0, 0)
+ButtonExit.Size = UDim2.new(0, 42, 0, 43)
+ButtonExit.TextSize = 46
+ButtonExit.TextWrapped = true
+ButtonExit.Font = Enum.Font.SourceSansBold
+ButtonExit.TextColor3 = Color3.new(1, 1, 1)
+ButtonExit.BorderColor3 = Color3.new(0, 0, 0)
+ButtonExit.Text = "X"
+ButtonExit.BorderSizePixel = 0
+ButtonExit.BackgroundColor3 = Color3.new(1, 0.3333333432674408, 0)
+ButtonExit.Parent = background
+ButtonExit.MouseButton1Click:Connect(closeMenu)
+
+-- Functionality to drag the UI
+local dragging
+local dragInput
+local dragStart
+local startPos
+
+local function update(input)
+    local delta = input.Position - dragStart
+    mainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+mainFrame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = mainFrame.Position
+
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+mainFrame.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        dragInput = input
+    end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        update(input)
+    end
 end)
