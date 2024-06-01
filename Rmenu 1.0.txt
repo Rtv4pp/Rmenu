@@ -158,32 +158,27 @@ closeButton.BorderSizePixel = 0
 closeButton.BackgroundColor3 = Color3.new(1, 0.3333333432674408, 0)
 closeButton.Parent = background
 
-local HouseMode = Instance.new("TextButton")
-HouseMode.Name = "HouseMode"
-HouseMode.Visible = true
-HouseMode.Position = UDim2.new(0.24668192863464355, 0, 0.12114989757537842, 0)
-HouseMode.Size = UDim2.new(0, 65, 0, 25)
-HouseMode.Font = Enum.Font.SourceSansBold
-HouseMode.TextSize = 14
-HouseMode.TextColor3 = Color3.new(1, 1, 1)
-HouseMode.BorderColor3 = Color3.new(0, 0, 0)
-HouseMode.Text = "HouseMode"
-HouseMode.BorderSizePixel = 0
-HouseMode.BackgroundColor3 = Color3.new(1, 0.3333333432674408, 0)
-HouseMode.Parent = background
-
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local SpawnVehicleRE = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("SpawnVehiclesRE")
 
+local HouseMode = Instance.new("TextButton")
+HouseMode.Name = "HouseMode"
+HouseMode.Visible = true
+HouseMode.Position = UDim2.new(0.24668192863464355,0,0.12114989757537842,0)
+HouseMode.Size = UDim2.new(0,65,0,25)
+HouseMode.Font = Enum.Font.SourceSansBold
+HouseMode.TextSize = 14
+HouseMode.TextColor3 = Color3.new(1,1,1)
+HouseMode.BorderColor3 = Color3.new(0,0,0)
+HouseMode.Text = "HouseMode"
+HouseMode.BorderSizePixel = 0
+HouseMode.BackgroundColor3 = Color3.new(1,0.3333333432674408,0)
+HouseMode.Parent = background
 
-CarMode.MouseButton1Click:Connect(function()
-    updateScrollWithVehicles()
-end)
+local yOffset = 0
+local totalHeight = 0
 
-closeButton.MouseButton1Click:Connect(function()
-    mainFrame:Destroy()
-end)
-
+-- Function to update the scrolling frame with the list of vehicles
 local function updateScrollWithVehicles()
     for _, child in ipairs(scrollingFrame:GetChildren()) do
         if child:IsA("TextButton") then
@@ -214,8 +209,8 @@ local function updateScrollWithVehicles()
     scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
 end
 
-HouseMode.MouseButton1Click:Connect(function()
-    -- Adicione aqui a lógica para o modo de casa
+CarMode.MouseButton1Click:Connect(function()
+    updateScrollWithVehicles()
 end)
 
 spawnButton.MouseButton1Click:Connect(function()
@@ -228,3 +223,6 @@ spawnButton.MouseButton1Click:Connect(function()
     end
 end)
 
+closeButton.MouseButton1Click:Connect(function()
+    mainFrame:Destroy()
+end)
