@@ -77,16 +77,6 @@ ButtonExit.Name = "ButtonExit"
 ButtonExit.Visible = true
 ButtonExit.Position = UDim2.new(1.0138356685638428,0,0,0)
 ButtonExit.Size = UDim2.new(0,42,0,43)
-
-ButtonExit.TextSize = 46
-ButtonExit.TextWrapped = true
-ButtonExit.Font = Enum.Font.SourceSansBold
-ButtonExit.TextColor3 = Color3.new(1,1,1)
-ButtonExit.BorderColor3 = Color3.new(0,0,0)
-ButtonExit.Text = "X"
-ButtonExit.BorderSizePixel = 0
-ButtonExit.BackgroundColor3 = Color3.new(1,0.3333333432674408,0)
-ButtonExit.Parent = background
 			
 local HouseMode = Instance.new("TextButton")
 HouseMode.Name = "HouseMode"
@@ -171,23 +161,16 @@ ButtonExit.BackgroundColor3 = Color3.new(1, 0.3333333432674408, 0)
 ButtonExit.Parent = background
 ButtonExit.MouseButton1Click:Connect(closeMenu)
 
--- Functionality to drag the UI
+-- Adicionando funcionalidade de arrastar e soltar
 local dragging
-local dragInput
 local dragStart
 local startPos
 
-local function update(input)
-    local delta = input.Position - dragStart
-    mainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-end
-
-mainFrame.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+background.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
         dragging = true
         dragStart = input.Position
-        startPos = mainFrame.Position
-
+        startPos = background.Position
         input.Changed:Connect(function()
             if input.UserInputState == Enum.UserInputState.End then
                 dragging = false
@@ -196,14 +179,15 @@ mainFrame.InputBegan:Connect(function(input)
     end
 end)
 
-mainFrame.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-        dragInput = input
+background.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement and dragging then
+        local delta = input.Position - dragStart
+        background.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
     end
 end)
 
-game:GetService("UserInputService").InputChanged:Connect(function(input)
-    if input == dragInput and dragging then
-        update(input)
+background.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = false
     end
 end)
