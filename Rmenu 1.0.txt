@@ -161,6 +161,78 @@ ButtonExit.BackgroundColor3 = Color3.new(1, 0.3333333432674408, 0)
 ButtonExit.Parent = background
 ButtonExit.MouseButton1Click:Connect(closeMenu)
 
+local vehicles = {
+    {id = 26, name = "Fusca"},
+    {id = 27, name = "Hypercar"},
+    {id = 30, name = "Motinha de flor"},
+    {id = 32, name = "Sian"},
+    {id = 33, name = "Van"},
+    {id = 38, name = "PinkCar"},
+    {id = 45, name = "HalloweenCar"},
+    {id = 47, name = "BabyCar"},
+    {id = 51, name = "One"},
+    {id = 53, name = "PinkMotor"},
+    {id = 55, name = "Lambo"},
+    {id = 58, name = "Seig"},
+    {id = 59, name = "MemMotor"}
+}
+
+-- Função para atualizar a lista no ScrollingFrame
+local function updateScrollList()
+    for _, vehicle in ipairs(vehicles) do
+        local button = Instance.new("TextButton")
+        button.Size = UDim2.new(0, 150, 0, 30)
+        button.Position = UDim2.new(0.5, -75, 0, totalHeight)
+        button.Text = vehicle.id .. " " .. vehicle.name
+        button.Font = Enum.Font.SourceSansBold
+        button.TextColor3 = Color3.new(1, 1, 1)
+        button.BackgroundColor3 = Color3.new(0, 0, 0)
+        button.BorderSizePixel = 0
+        button.AutoButtonColor = false
+        button.Parent = scrollingFrame
+
+        totalHeight = totalHeight + 40
+
+        button.MouseButton1Click:Connect(function()
+            TexBox.Text = tostring(vehicle.id)
+        end)
+    end
+
+    scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
+end
+
+-- Função para spawnar o veículo selecionado
+local function spawnSelectedVehicle()
+    local vehicleNumber = TexBox.Text
+    if vehicleNumber ~= "" then
+        local vehicleName = "ltp2_car_" .. vehicleNumber
+        local SpawnVehicleRE = game.ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("SpawnVehiclesRE")
+        SpawnVehicleRE:FireServer(vehicleName, Vector3.new(0, 0, 0))
+    else
+        warn("Please enter a vehicle number")
+    end
+end
+
+-- Adicionando a funcionalidade do botão CarMode
+CarMode.MouseButton1Click:Connect(function()
+    TexBox.Text = "" -- Limpa o TextBox ao trocar para o modo Car
+    TexBoxPlot.Text = "" -- Limpa o TextBox de plot ao trocar para o modo Car
+    scrollingFrame:ClearAllChildren() -- Limpa a lista de veículos ao trocar para o modo Car
+    totalHeight = 0
+    updateScrollList()
+end)
+
+-- Adicionando a funcionalidade do botão de spawn
+SpawnButton.MouseButton1Click:Connect(function()
+    local mode = "CarMode" -- Você pode definir isso dinamicamente com base no modo atual
+    if mode == "CarMode" then
+        spawnSelectedVehicle()
+    else
+        -- Adicione a lógica para outros modos aqui
+    end
+end)
+
+
 -- Adicionando funcionalidade de arrastar e soltar
 local dragging
 local dragStart
