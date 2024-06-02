@@ -28,7 +28,7 @@ Title.Font = Enum.Font.SourceSansBold
 Title.TextSize = 43
 Title.TextColor3 = Color3.new(1,1,1)
 Title.BorderColor3 = Color3.new(0,0,0)
-Title.Text = "Rmenu 1.1.8"
+Title.Text = "Rmenu 1.1.9"
 Title.BorderSizePixel = 0
 Title.BackgroundColor3 = Color3.new(0.4549019932746887,0.29019609093666077,1)
 Title.Parent = background
@@ -198,16 +198,17 @@ local function updateScrollWithVehicles()
 	local totalHeight = 0
 	for _, vehicle in ipairs(vehicles) do
 		local button = Instance.new("TextButton")
-		button.Size = UDim2.new(0,72,0,25)
+		button.Size = UDim2.new(0.3012552261352539,0,0.0670241266489029,0)
 		button.Position = UDim2.new(0.5, -36, 0, totalHeight) -- Ajuste a posição para centralizar
-		button.Text = vehicle.id .. " " .. vehicle.name
+		button.Text = vehicle.name
 		button.Font = Enum.Font.SourceSansBold
 		button.TextColor3 = Color3.new(1, 1, 1)
 		button.BackgroundColor3 = Color3.new(0.4549019932746887,0.29019609093666077,1)
 		button.BorderSizePixel = 0
 		button.AutoButtonColor = false
 		button.Parent = Scroll
-
+		button.TextSize = 8
+		
 		totalHeight = totalHeight + 40
 
 		button.MouseButton1Click:Connect(function()
@@ -228,16 +229,17 @@ local function updateScrollWithHouses()
 	local totalHeight = 0
 	for _, house in ipairs(houses) do
 		local button = Instance.new("TextButton")
-		button.Size = UDim2.new(0,72,0,25)
+		button.Size = UDim2.new(0.3012552261352539,0,0.0670241266489029,0)
 		button.Position = UDim2.new(0.5, -36, 0, totalHeight) -- Ajuste a posição para centralizar
-		button.Text = house.id .. " " .. house.name
+		button.Text = house.name
 		button.Font = Enum.Font.SourceSansBold
 		button.TextColor3 = Color3.new(1,1,1)
 		button.BackgroundColor3 = Color3.new(0.4549019932746887,0.29019609093666077,1)
 		button.BorderSizePixel = 0
 		button.AutoButtonColor = false
 		button.Parent = Scroll
-
+		button.TextSize = 8
+		
 		totalHeight = totalHeight + 40
 
 		button.MouseButton1Click:Connect(function()
