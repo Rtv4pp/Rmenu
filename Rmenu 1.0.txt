@@ -198,8 +198,8 @@ local function updateScrollWithVehicles()
 	local totalHeight = 0
 	for _, vehicle in ipairs(vehicles) do
 		local button = Instance.new("TextButton")
-		button.Size = UDim2.new(0.3012552261352539,0,0.0670241266489029,0)
-		button.Position = UDim2.new(0.5, -36, 0, totalHeight) -- Ajuste a posição para centralizar
+	        button.Size = UDim2.new(0, 150, 0, 30)
+	        button.Position = UDim2.new(0.5, -75, 0, totalHeight)
 		button.Text = vehicle.name
 		button.Font = Enum.Font.SourceSansBold
 		button.TextColor3 = Color3.new(1, 1, 1)
@@ -229,8 +229,8 @@ local function updateScrollWithHouses()
 	local totalHeight = 0
 	for _, house in ipairs(houses) do
 		local button = Instance.new("TextButton")
-		button.Size = UDim2.new(0.3012552261352539,0,0.0670241266489029,0)
-		button.Position = UDim2.new(0.5, -36, 0, totalHeight) -- Ajuste a posição para centralizar
+	        button.Size = UDim2.new(0, 150, 0, 30)
+	        button.Position = UDim2.new(0.5, -75, 0, totalHeight)
 		button.Text = house.name
 		button.Font = Enum.Font.SourceSansBold
 		button.TextColor3 = Color3.new(1,1,1)
