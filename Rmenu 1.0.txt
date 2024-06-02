@@ -261,27 +261,27 @@ HouseMode.MouseButton1Click:Connect(function()
 end)
 
 SpawnButton.MouseButton1Click:Connect(function()
-	local plot = TexBox.Text
-	if selectedHouseId then
-		if plot ~= "" then
-			local args = {
-				[1] = "House",
-				[2] = plot,
-				[3] = selectedHouseId
-			}
-			BuildRE:FireServer(unpack(args))
-		else
-			warn("Please enter a plot for the house")
-		end
-	else
-		local vehicleNumber = TexBox.Text
-		if vehicleNumber ~= "" then
-			local vehicleName = "ltp2_car_" .. vehicleNumber
-			SpawnVehicleRE:FireServer(vehicleName, Vector3.new(0, 0, 0))
-		else
-			warn("Please enter a vehicle number")
-		end
-	end
+    local plot = textBox.Text
+    if selectedHouseId then
+        if plot ~= "" then
+            local args = {
+                [1] = "House",
+                [2] = plot,
+                [3] = selectedHouseId
+            }
+            BuildRE:FireServer(unpack(args))
+        else
+            warn("Please enter a plot for the house")
+        end
+    else
+        local vehicleNumber = TexBox.Text
+        if vehicleNumber ~= "" then
+            local vehicleName = "ltp2_car_" .. vehicleNumber
+            SpawnVehicleRE:FireServer(vehicleName, Vector3.new(0, 0, 0))
+        else
+            warn("Please enter a vehicle number")
+        end
+    end
 end)
 
 ButtonExit.MouseButton1Click:Connect(function()
