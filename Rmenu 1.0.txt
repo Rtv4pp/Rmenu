@@ -57,36 +57,6 @@ local vehicles = {
     {id = 59, name = "MemMotor"}
 }
 
-local function updateScrollWithVehicles()
-    for _, child in ipairs(scrollingFrame:GetChildren()) do
-        if child:IsA("TextButton") then
-            child:Destroy()
-        end
-    end
-    
-    local totalHeight = 0
-    for _, vehicle in ipairs(vehicles) do
-        local button = Instance.new("TextButton")
-        button.Size = UDim2.new(0, 150, 0, 30)
-        button.Position = UDim2.new(0.5, -75, 0, totalHeight)
-        button.Text = vehicle.id .. " " .. vehicle.name
-        button.Font = Enum.Font.SourceSansBold
-        button.TextColor3 = Color3.new(1, 1, 1)
-        button.BackgroundColor3 = Color3.new(0, 0, 0)
-        button.BorderSizePixel = 0
-        button.AutoButtonColor = false
-        button.Parent = scrollingFrame
-
-        totalHeight = totalHeight + 40
-
-        button.MouseButton1Click:Connect(function()
-            textBox.Text = tostring(vehicle.id)
-        end)
-    end
-
-    scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
-end
-
 local CarMode = Instance.new("TextButton")
 CarMode.Name = "CarMode"
 CarMode.Visible = true
