@@ -25,7 +25,7 @@ Title.Font = Enum.Font.SourceSansBold
 Title.TextSize = 52
 Title.TextColor3 = Color3.new(1, 1, 1)
 Title.BorderColor3 = Color3.new(0, 0, 0)
-Title.Text = "Rmenu 1.1"
+Title.Text = "Rmenu 1.1.0"
 Title.BorderSizePixel = 0
 Title.BackgroundColor3 = Color3.new(1, 0.3176470696926117, 0.003921568859368563)
 Title.Parent = background
@@ -58,16 +58,9 @@ local vehicles = {
 }
 
 local houses = {
-    {id = "H1", name = "House 1"},
-    {id = "H2", name = "House 2"},
-    {id = "H3", name = "House 3"},
-    {id = "H4", name = "House 4"},
-    {id = "H5", name = "House 5"},
-    {id = "H6", name = "House 6"},
-    {id = "H7", name = "House 7"},
-    {id = "H8", name = "House 8"},
-    {id = "H9", name = "House 9"},
-    {id = "H10", name = "House 10"}
+    {id = "NTP_Manor_008", name = "Casa das neves"},
+    {id = "NTP_Manor_006", name = "Deser Mansion"},
+    {id = "NTP_Manor_012", name = "Casa submersa"}
 }
 
 local CarMode = Instance.new("TextButton")
