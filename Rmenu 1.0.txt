@@ -25,7 +25,7 @@ Title.Font = Enum.Font.SourceSansBold
 Title.TextSize = 52
 Title.TextColor3 = Color3.new(1, 1, 1)
 Title.BorderColor3 = Color3.new(0, 0, 0)
-Title.Text = "Rmenu 1.1.1"
+Title.Text = "Rmenu 1.1.2"
 Title.BorderSizePixel = 0
 Title.BackgroundColor3 = Color3.new(1, 0.3176470696926117, 0.003921568859368563)
 Title.Parent = background
@@ -59,7 +59,15 @@ local vehicles = {
 
 local houses = {
     {id = "NTP_Manor_008", name = "Casa das neves"},
-    {id = "NTP_Manor_006", name = "Deser Mansion"},
+    {id = "NTP_Manor_006", name = "Casa de veado"},
+    {id = "NTP_Manor_005", name = "Casa Longa da Maia"},
+    {id = "NTP_Manor_011", name = "Casa que vc comprou"},
+    {id = "NTP_Manor_010", name = "Casa das 7"},
+    {id = "NTP_Manor_007", name = "Casa raiz da maia"},
+    {id = "NTP_Manor_004", name = "Casa dos riscos"},
+    {id = "NTP_Manor_003", name = "Casa de rai"},
+    {id = "NTP_Manor_002", name = "Casa feia"},
+    {id = "NTP_Manor_001", name = "Parece com a de rai"},
     {id = "NTP_Manor_012", name = "Casa submersa"}
 }
 
