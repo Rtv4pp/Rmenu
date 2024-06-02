@@ -25,7 +25,7 @@ Title.Font = Enum.Font.SourceSansBold
 Title.TextSize = 52
 Title.TextColor3 = Color3.new(1, 1, 1)
 Title.BorderColor3 = Color3.new(0, 0, 0)
-Title.Text = "Rmenu 1.1.3"
+Title.Text = "Rmenu 1.1.2"
 Title.BorderSizePixel = 0
 Title.BackgroundColor3 = Color3.new(1, 0.3176470696926117, 0.003921568859368563)
 Title.Parent = background
@@ -178,7 +178,7 @@ local function updateScrollWithVehicles()
         button.Text = vehicle.id .. " " .. vehicle.name
         button.Font = Enum.Font.SourceSansBold
         button.TextColor3 = Color3.new(1, 1, 1)
-        button.BackgroundColor3 = Color3.new(0, 0, 0)
+        button.BackgroundColor3 = Color3.new(1,0.3333333432674408,0)
         button.BorderSizePixel = 0
         button.AutoButtonColor = false
         button.Parent = scrollingFrame
@@ -202,20 +202,16 @@ local function updateScrollWithHouses()
     
     local totalHeight = 0
     for _, house in ipairs(houses) do
-        local ElementodoScroll = Instance.new("TextButton")
-        ElementodoScroll.Name = "ElementodoScroll"
-        ElementodoScroll.Visible = true
-        ElementodoScroll.Position = UDim2.new(0,4,0,94)
-        ElementodoScroll.Size = UDim2.new(0,144,0,38)
-        
-        ElementodoScroll.Font = Enum.Font.SourceSansBold
-        ElementodoScroll.TextSize = 14
-        ElementodoScroll.TextColor3 = Color3.new(1,1,1)
-        ElementodoScroll.BorderColor3 = Color3.new(0,0,0)
-        ElementodoScroll.Text = "HouseMode"
-        ElementodoScroll.BorderSizePixel = 0
-        ElementodoScroll.BackgroundColor3 = Color3.new(1,0.3333333432674408,0)
-        ElementodoScroll.Parent = Scroll
+        local button = Instance.new("TextButton")
+        button.Size = UDim2.new(0, 150, 0, 30)
+        button.Position = UDim2.new(0.5, -75, 0, totalHeight)
+        button.Text = house.id .. " " .. house.name
+        button.Font = Enum.Font.SourceSansBold
+        button.TextColor3 = Color3.new(1,1,1)
+        button.BackgroundColor3 = Color3.new(1,0.3333333432674408,0)
+        button.BorderSizePixel = 0
+        button.AutoButtonColor = false
+        button.Parent = scrollingFrame
 
         totalHeight = totalHeight + 40
 
