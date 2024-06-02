@@ -25,7 +25,7 @@ Title.Font = Enum.Font.SourceSansBold
 Title.TextSize = 52
 Title.TextColor3 = Color3.new(1, 1, 1)
 Title.BorderColor3 = Color3.new(0, 0, 0)
-Title.Text = "Rmenu 1.1.0"
+Title.Text = "Rmenu 1.1.1"
 Title.BorderSizePixel = 0
 Title.BackgroundColor3 = Color3.new(1, 0.3176470696926117, 0.003921568859368563)
 Title.Parent = background
@@ -250,4 +250,41 @@ end)
 
 closeButton.MouseButton1Click:Connect(function()
     mainFrame:Destroy()
+end)
+
+-- Draggable functionality
+local dragging
+local dragInput
+local dragStart
+local startPos
+
+local function update(input)
+    local delta = input.Position - dragStart
+    background.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+background.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = background.Position
+        
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+background.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        dragInput = input
+    end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+    if dragging and input == dragInput then
+        update(input)
+    end
 end)
