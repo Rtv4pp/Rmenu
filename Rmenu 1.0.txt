@@ -28,7 +28,7 @@ Title.Font = Enum.Font.SourceSansBold
 Title.TextSize = 43
 Title.TextColor3 = Color3.new(1,1,1)
 Title.BorderColor3 = Color3.new(0,0,0)
-Title.Text = "Rmenu 1.1.5"
+Title.Text = "Rmenu 1.1.6"
 Title.BorderSizePixel = 0
 Title.BackgroundColor3 = Color3.new(0.4549019932746887,0.29019609093666077,1)
 Title.Parent = background
@@ -189,65 +189,67 @@ local houses = {
 }
 
 local function updateScrollWithVehicles()
-	for _, child in ipairs(Scroll:GetChildren()) do
-		if child:IsA("TextButton") then
-			child:Destroy()
-		end
-	end
+    for _, child in ipairs(Scroll:GetChildren()) do
+        if child:IsA("TextButton") then
+            child:Destroy()
+        end
+    end
 
-	local totalHeight = 0
-	for _, vehicle in ipairs(vehicles) do
-		local button = Instance.new("TextButton")
-		button.Size = UDim2.new(0,72,0,25)
-		button.Position = UDim2.new(0.5, -75, 0, totalHeight)
-		button.Text = vehicle.id .. " " .. vehicle.name
-		button.Font = Enum.Font.SourceSansBold
-		button.TextColor3 = Color3.new(1, 1, 1)
-		button.BackgroundColor3 = Color3.new(0.4549019932746887,0.29019609093666077,1)
-		button.BorderSizePixel = 0
-		button.AutoButtonColor = false
-		button.Parent = Scroll
+    local totalHeight = 0
+    for _, vehicle in ipairs(vehicles) do
+        local button = Instance.new("TextButton")
+        button.Size = UDim2.new(0,72,0,25)
+        button.Position = UDim2.new(0.5, -36, 0, totalHeight) -- Ajuste a posição para centralizar
+        button.Text = vehicle.id .. " " .. vehicle.name
+        button.Font = Enum.Font.SourceSansBold
+        button.TextColor3 = Color3.new(1, 1, 1)
+        button.BackgroundColor3 = Color3.new(0.4549019932746887,0.29019609093666077,1)
+        button.BorderSizePixel = 0
+        button.AutoButtonColor = false
+        button.Parent = Scroll
 
-		totalHeight = totalHeight + 40
+        totalHeight = totalHeight + 40
 
-		button.MouseButton1Click:Connect(function()
-			TexBox.Text = tostring(vehicle.id)
-		end)
-	end
+        button.MouseButton1Click:Connect(function()
+            TexBox.Text = tostring(vehicle.id)
+        end)
+    end
 
-	Scroll.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
+    Scroll.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
 end
 
 local function updateScrollWithHouses()
-	for _, child in ipairs(Scroll:GetChildren()) do
-		if child:IsA("TextButton") then
-			child:Destroy()
-		end
-	end
+    for _, child in ipairs(Scroll:GetChildren()) do
+        if child:IsA("TextButton") then
+            child:Destroy()
+        end
+    end
 
-	local totalHeight = 0
-	for _, house in ipairs(houses) do
-		local button = Instance.new("TextButton")
-		button.Size = UDim2.new(0,72,0,25)
-		button.Position = UDim2.new(0.5, -75, 0, totalHeight)
-		button.Text = house.id .. " " .. house.name
-		button.Font = Enum.Font.SourceSansBold
-		button.TextColor3 = Color3.new(1,1,1)
-		button.BackgroundColor3 = Color3.new(0.4549019932746887,0.29019609093666077,1)
-		button.BorderSizePixel = 0
-		button.AutoButtonColor = false
-		button.Parent = Scroll
+    local totalHeight = 0
+    for _, house in ipairs(houses) do
+        local button = Instance.new("TextButton")
+        button.Size = UDim2.new(0,72,0,25)
+        button.Position = UDim2.new(0.5, -36, 0, totalHeight) -- Ajuste a posição para centralizar
+        button.Text = house.id .. " " .. house.name
+        button.Font = Enum.Font.SourceSansBold
+        button.TextColor3 = Color3.new(1,1,1)
+        button.BackgroundColor3 = Color3.new(0.4549019932746887,0.29019609093666077,1)
+        button.BorderSizePixel = 0
+        button.AutoButtonColor = false
+        button.Parent = Scroll
 
-		totalHeight = totalHeight + 40
+        totalHeight = totalHeight + 40
 
-		button.MouseButton1Click:Connect(function()
-			selectedHouseId = house.id
-			TexBox.Text = house.id
-		end)
-	end
+        button.MouseButton1Click:Connect(function()
+            selectedHouseId = house.id
+            TexBox.Text = house.id
+        end)
+    end
 
-	Scroll.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
+    Scroll.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
 end
+
+
 
 CarMode.MouseButton1Click:Connect(function()
 	selectedHouseId = nil -- Clear the selected house ID when switching to CarMode
