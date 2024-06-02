@@ -216,7 +216,7 @@ CarMode.MouseButton1Click:Connect(function()
 end)
 
 spawnButton.MouseButton1Click:Connect(function()
-    local vehicleNumber = textBox.Text
+    local vehicleNumber = TexBox.Text
     if vehicleNumber ~= "" then
         local vehicleName = "ltp2_car_" .. vehicleNumber
         SpawnVehicleRE:FireServer(vehicleName, Vector3.new(0, 0, 0))
