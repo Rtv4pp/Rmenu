@@ -28,7 +28,7 @@ Title.Font = Enum.Font.SourceSansBold
 Title.TextSize = 43
 Title.TextColor3 = Color3.new(1,1,1)
 Title.BorderColor3 = Color3.new(0,0,0)
-Title.Text = "Rmenu 1.2.0"
+Title.Text = "Rmenu 1.2.1"
 Title.BorderSizePixel = 0
 Title.BackgroundColor3 = Color3.new(0.4549019932746887,0.29019609093666077,1)
 Title.Parent = background
@@ -295,6 +295,7 @@ local dragging
 local dragInput
 local dragStart
 local startPos
+local UserInputService = game:GetService("UserInputService")
 
 local function update(input)
     local delta = input.Position - dragStart
@@ -307,14 +308,9 @@ background.InputBegan:Connect(function(input)
         dragStart = input.Position
         startPos = background.Position
 
-        -- Disable camera control while dragging
-        game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
-
         input.Changed:Connect(function()
             if input.UserInputState == Enum.UserInputState.End then
                 dragging = false
-                -- Re-enable camera control when dragging ends
-                game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.Default
             end
         end)
     end
@@ -326,22 +322,27 @@ background.InputChanged:Connect(function(input)
     end
 end)
 
-game:GetService("UserInputService").InputChanged:Connect(function(input)
+UserInputService.InputChanged:Connect(function(input)
     if dragging and input == dragInput then
         update(input)
     end
 end)
 
-background.InputBegan:Connect(function(input)
-    -- Consume the input to prevent camera movement
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        input.UserInputState = Enum.UserInputState.End
+-- Impedir a rotação da câmera enquanto arrasta o UI
+UserInputService.InputBegan:Connect(function(input)
+    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        input.UserInputState = Enum.UserInputState.End -- Impede a propagação do evento de entrada
     end
 end)
 
-background.InputChanged:Connect(function(input)
-    -- Consume the input to prevent camera movement
-    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-        input.UserInputState = Enum.UserInputState.End
+UserInputService.InputChanged:Connect(function(input)
+    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        input.UserInputState = Enum.UserInputState.End -- Impede a propagação do evento de entrada
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        dragging = false
     end
 end)
