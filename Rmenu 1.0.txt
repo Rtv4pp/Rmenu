@@ -297,32 +297,51 @@ local dragStart
 local startPos
 
 local function update(input)
-	local delta = input.Position - dragStart
-	background.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    local delta = input.Position - dragStart
+    background.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 end
 
 background.InputBegan:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-		dragging = true
-		dragStart = input.Position
-		startPos = background.Position
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = background.Position
 
-		input.Changed:Connect(function()
-			if input.UserInputState == Enum.UserInputState.End then
-				dragging = false
-			end
-		end)
-	end
+        -- Disable camera control while dragging
+        game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
+
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+                -- Re-enable camera control when dragging ends
+                game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.Default
+            end
+        end)
+    end
 end)
 
 background.InputChanged:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-		dragInput = input
-	end
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        dragInput = input
+    end
 end)
 
 game:GetService("UserInputService").InputChanged:Connect(function(input)
-	if dragging and input == dragInput then
-		update(input)
-	end
+    if dragging and input == dragInput then
+        update(input)
+    end
+end)
+
+background.InputBegan:Connect(function(input)
+    -- Consume the input to prevent camera movement
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        input.UserInputState = Enum.UserInputState.End
+    end
+end)
+
+background.InputChanged:Connect(function(input)
+    -- Consume the input to prevent camera movement
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        input.UserInputState = Enum.UserInputState.End
+    end
 end)
